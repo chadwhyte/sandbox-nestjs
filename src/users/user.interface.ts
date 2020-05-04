@@ -11,3 +11,9 @@ export interface ICreateUserRequest {
   lastName: string;
   email: string;
 }
+
+export interface IUpdateUserRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+}

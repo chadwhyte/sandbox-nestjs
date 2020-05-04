@@ -1,10 +1,24 @@
-import { Controller, Get, Req, Param, Post, Body } from '@nestjs/common';
-import { IUserResource, ICreateUserRequest } from './user.interface';
+import {
+  Controller,
+  Get,
+  Req,
+  Param,
+  Post,
+  Body,
+  Delete,
+  Put,
+} from '@nestjs/common';
+import {
+  IUserResource,
+  ICreateUserRequest,
+  IUpdateUserRequest,
+} from './user.interface';
 
 @Controller('users')
 export class UsersController {
   @Get()
   getUsers(): IUserResource[] {
+    // TODO - should use @Query to support pagination
     return this.users;
   }
 
@@ -23,6 +37,27 @@ export class UsersController {
     });
 
     return this.getUser(createUserRequest.id);
+  }
+
+  @Put(':id')
+  updateUser(
+    @Param('id') id: string,
+    @Body() updateUserRequest: IUpdateUserRequest,
+  ): IUserResource {
+    const user = this.users.find(u => u.id === id);
+    user.firstName = updateUserRequest.firstName;
+    user.lastName = updateUserRequest.lastName;
+    user.email = updateUserRequest.email;
+
+    return this.getUser(id);
+  }
+
+  @Delete(':id')
+  deleteUser(@Param('id') id: string) {
+    const userIndex = this.users.findIndex(u => u.id === id);
+    if (userIndex >= 0) {
+      this.users.splice(userIndex, 1);
+    }
   }
 
   users: IUserResource[] = [
