@@ -8,14 +8,12 @@ import {
   Put,
   HttpException,
   HttpStatus,
+  UsePipes,
 } from '@nestjs/common';
-import {
-  IUserResource,
-  ICreateUserRequest,
-  IUpdateUserRequest,
-} from './user.interface';
+import { IUserResource } from './user.interface';
 import { UsersRepository } from './user.repository';
 import { ForbiddenException } from 'src/exceptions/forbidden.exception';
+import { CreateUserRequest, UpdateUserRequest } from './user.requests';
 
 @Controller('users')
 export class UsersController {
@@ -39,7 +37,7 @@ export class UsersController {
 
   @Post()
   async createUser(
-    @Body() createUserRequest: ICreateUserRequest,
+    @Body() createUserRequest: CreateUserRequest,
   ): Promise<IUserResource> {
     this.usersRepository.create({
       id: createUserRequest.id,
@@ -54,7 +52,7 @@ export class UsersController {
   @Put(':id')
   async updateUser(
     @Param('id') id: string,
-    @Body() updateUserRequest: IUpdateUserRequest,
+    @Body() updateUserRequest: UpdateUserRequest,
   ): Promise<IUserResource> {
     this.usersRepository.update({
       id,
