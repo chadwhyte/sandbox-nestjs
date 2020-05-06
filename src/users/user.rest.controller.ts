@@ -6,6 +6,8 @@ import {
   Body,
   Delete,
   Put,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import {
   IUserResource,
@@ -13,6 +15,7 @@ import {
   IUpdateUserRequest,
 } from './user.interface';
 import { UsersRepository } from './user.repository';
+import { ForbiddenException } from 'src/exceptions/forbidden.exception';
 
 @Controller('users')
 export class UsersController {
@@ -27,6 +30,11 @@ export class UsersController {
   @Get(':id')
   async getUser(@Param('id') id: string): Promise<IUserResource> {
     return this.usersRepository.getSingle(id);
+  }
+
+  @Get('exception-test')
+  async exceptionTest(): Promise<IUserResource> {
+    throw new ForbiddenException();
   }
 
   @Post()
