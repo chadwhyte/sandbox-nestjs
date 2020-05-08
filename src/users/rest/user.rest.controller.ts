@@ -6,14 +6,11 @@ import {
   Body,
   Delete,
   Put,
-  HttpException,
-  HttpStatus,
-  UsePipes,
 } from '@nestjs/common';
-import { IUserResource } from './user.interface';
-import { UsersRepository } from './user.repository';
+import { UsersRepository } from '../user.repository';
 import { ForbiddenException } from 'src/exceptions/forbidden.exception';
 import { CreateUserRequest, UpdateUserRequest } from './user.requests';
+import { IUserResource } from './user.resource.interface';
 
 @Controller('users')
 export class UsersController {

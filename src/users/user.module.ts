@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { UsersController } from './user.rest.controller';
 import { UsersRepository } from './user.repository';
+import { UserResolver } from './graphql/user.resolver';
+import { UsersController } from './rest/user.rest.controller';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersRepository],
+  providers: [UsersRepository, UserResolver],
   exports: [UsersRepository], // allows other modules to share the same repo instance
 })
 export class UserModule {}

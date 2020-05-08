@@ -1,9 +1,9 @@
-import { IUserResource } from './user.interface';
 import { Injectable } from '@nestjs/common';
+import { IUser } from './user.interface';
 
 @Injectable()
 export class UsersRepository {
-  private readonly users: IUserResource[] = [
+  private readonly users: IUser[] = [
     {
       id: '1',
       firstName: 'Tom',
@@ -24,11 +24,11 @@ export class UsersRepository {
     },
   ];
 
-  create(user: IUserResource) {
+  create(user: IUser) {
     this.users.push(user);
   }
 
-  update(updatedUser: IUserResource) {
+  update(updatedUser: IUser) {
     const user = this.users.find(u => u.id === updatedUser.id);
     user.firstName = updatedUser.firstName;
     user.lastName = updatedUser.lastName;
@@ -42,11 +42,11 @@ export class UsersRepository {
     }
   }
 
-  getAll(): IUserResource[] {
+  getAll(): IUser[] {
     return this.users;
   }
 
-  getSingle(id: string): IUserResource {
+  getSingle(id: string): IUser {
     return this.users.find(u => u.id === id);
   }
 }
